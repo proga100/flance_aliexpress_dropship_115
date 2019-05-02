@@ -1,0 +1,166 @@
+ul.thumbnails.image_picker_selector {
+     overflow: auto;
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    padding-left: 5px;
+  
+  
+  }
+  ul.thumbnails.image_picker_selector ul {
+    overflow: auto;
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px; }
+  ul.thumbnails.image_picker_selector li.group {width:100%;} 
+  ul.thumbnails.image_picker_selector li.group_title {
+    float: none; }
+  ul.thumbnails.image_picker_selector li {
+    margin: 0px 12px 12px 0px;
+    float: left; }
+    ul.thumbnails.image_picker_selector li .thumbnail {
+      padding: 3px;
+      border: 1px solid #dddddd;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none; }
+	  
+      ul.thumbnails.image_picker_selector li .thumbnail img {
+        -webkit-user-drag: none; }
+		
+    ul.thumbnails.image_picker_selector li .thumbnail.selected {
+      background: #0de115; }
+	  
+.selected::before {
+        transform: scale(1) !important;
+}
+
+.selected::before {
+    display: block;
+    background-size: 100% 100%;
+    content: "";
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    z-index: 1;
+    text-align: center;
+    transition-duration: 300ms;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAtMzQ2LjM4NCkiPjxwYXRoIGZpbGw9IiMxZWM4MWUiIGZpbGwtb3BhY2l0eT0iLjgiIGQ9Ik0zMiAzNDYuNGEzMiAzMiAwIDAgMC0zMiAzMiAzMiAzMiAwIDAgMCAzMiAzMiAzMiAzMiAwIDAgMCAzMi0zMiAzMiAzMiAwIDAgMC0zMi0zMnptMjEuMyAxMC4zbC0yNC41IDQxTDkuNSAzNzVsMTcuNyA5LjYgMjYtMjh6Ii8+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTkuNSAzNzUuMmwxOS4zIDIyLjQgMjQuNS00MS0yNiAyOC4yeiIvPjwvZz48L3N2Zz4=);
+		
+   width: 30px;
+    height: 30px;
+    top: 0.5%;
+    left: 0.5%;
+    transform: scale(0);
+   // border-radius: 50%;
+    margin: 0.5%;
+}
+.selected::after{
+        transform: scale(1) !important;
+}
+
+.selected::after {
+    display: block;
+    background-size: 100% 100%;
+    content: "";
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    z-index: 1;
+    text-align: center;
+    transition-duration: 300ms;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAtMzQ2LjM4NCkiPjxwYXRoIGZpbGw9IiMxZWM4MWUiIGZpbGwtb3BhY2l0eT0iLjgiIGQ9Ik0zMiAzNDYuNGEzMiAzMiAwIDAgMC0zMiAzMiAzMiAzMiAwIDAgMCAzMiAzMiAzMiAzMiAwIDAgMCAzMi0zMiAzMiAzMiAwIDAgMC0zMi0zMnptMjEuMyAxMC4zbC0yNC41IDQxTDkuNSAzNzVsMTcuNyA5LjYgMjYtMjh6Ii8+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTkuNSAzNzUuMmwxOS4zIDIyLjQgMjQuNS00MS0yNiAyOC4yeiIvPjwvZz48L3N2Zz4=);
+		
+   width: 30px;
+    height: 30px;
+    top: 0.5%;
+    left: 0.5%;
+    transform: scale(0);
+   // border-radius: 50%;
+    margin: 0.5%;
+}
+	
+.selected img {
+    filter: grayscale(1);
+    transform: scale(0.8);
+}
+
+.selected img {
+    display: block;
+    transition-duration: 300ms;
+    transform: scale(1);
+    filter: grayscale(0);
+    margin: 0px;
+    padding: 0px;
+	   
+}
+
+.selected {
+	user-select: none;
+    position: relative;
+    display: inline-block;
+    transition-duration: 300ms;
+    padding: 0px;
+    margin: 0px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    border-image: initial;
+}
+
+.image_picker_selector img{
+       width: 150px;
+    height: 150px;
+	cursor: pointer;
+}
+
+.container_select .image-picker{
+	
+	
+}
+
+  select.image-picker {
+    /* display: none; */
+    opacity: 0;
+    height: 0px !important;
+} 
+
+.galery_title {
+       text-align: left;
+    background: #ccc;
+    padding-left: 10px;
+    margin-top: 10px;
+    margin-top: 10px;
+}
+.selected .feat {
+	cursor: pointer;
+    position: absolute;
+    top: 0.5%;
+    right: 1%;
+	display: block;
+    background-size: 100% 100%;
+    content: "";
+    color: white;
+    font-weight: bold;
+    background-image: url(star_unselected.png);	
+    z-index: 1;
+    text-align: center;
+    transition-duration: 300ms;
+   
+		
+   width: 30px;
+    height: 30px;
+   
+  //  transform: scale(0);
+   // border-radius: 50%;
+    margin: 0.5%;
+}
+
+.selected .feat.star_select{
+ background-image: url(star_selected.png);	
+cursor: pointer;	
+}

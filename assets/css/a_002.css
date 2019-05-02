@@ -1,0 +1,81 @@
+#filter .label {
+    right: 304px
+}
+
+#country-selector {
+    right: 155px
+}
+
+.keyword-ipt input {
+    width: 60px
+}
+
+.add-to-wishlist a.atwl-button {
+    width: auto
+}
+
+.add-to-wishlist {
+    width: auto
+}
+
+.list-item .sp-competitiveproducts {
+    width: auto
+}
+
+@media (min-width:120px) {
+    .group-similar-item {
+        margin-right: 10px
+    }
+    #list-currency {
+        margin-right: 10px
+    }
+    .shipping-to-wrap {
+        margin-left: 10px
+    }
+    .n-sort-filter .sort-by-text {
+        display: inline
+    }
+}
+
+@media (min-width:1140px) {
+    .group-similar-item {
+        margin-right: 4px
+    }
+    #list-currency {
+        margin-right: 4px
+    }
+    .shipping-to-wrap {
+        margin-left: 15px
+    }
+    .n-sort-filter .sort-by-text {
+        display: inline
+    }
+}
+
+@media (min-width:1290px) {
+    .group-similar-item {
+        margin-right: 10px
+    }
+    #list-currency {
+        margin-right: 10px
+    }
+    .n-sort-filter .sort-by-text {
+        display: none
+    }
+}
+
+@media (min-width:1348px) {
+    .group-similar-item {
+        margin-right: 10px
+    }
+    #list-currency {
+        margin-right: 10px
+    }
+    .n-sort-filter .sort-by-text {
+        display: none
+    }
+}
+
+.narrow-down-bg {
+    padding: 0 6px
+}
