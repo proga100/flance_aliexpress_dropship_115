@@ -462,8 +462,8 @@ $imp->link_category_id =9;
     'name' => $imp->user_title,
     'description' => $imp->user_description,
 	'sku' => $cid,
-	'regular_price' => floatval(ereg_replace("[^-0-9\.]","",$imp->regular_price )),
-	'sale_price' =>  floatval(ereg_replace("[^-0-9\.]","",$imp->price)),
+	'regular_price' => floatval(preg_replace("/[^-0-9\.]/","",$imp->regular_price )),
+	'sale_price' =>  floatval(preg_replace("/[^-0-9\.]/","",$imp->price)),
 	 'categories' => [
         [
             'id' => $imp->link_category_id
@@ -641,8 +641,8 @@ $newitem_count = count($items);
 				]);		
 			}
 			}
-		
-		
+
+
 		// echo "<pre>";print_r ($variat);
 		foreach ($variat as $vr){
 									$variation[]= array(
@@ -677,7 +677,7 @@ $newitem_count = count($items);
                 'visible' => true,
                 'variation' => true,
                 'options' => [
-                    'Black',
+                    'Dark blue',
                     'yellow'
                 ]
             );
