@@ -270,6 +270,8 @@ if($wpdb->last_error !== '') {
 function create_item( $rest_request ) {
 	
 	
+	//print_r ($rest_request);exit;
+	
    $products_controler = new WC_REST_Products_Controller();
     if ( ! isset( $products_controler ) ) {
         $products_controler = new WC_REST_Products_Controller();
@@ -641,6 +643,31 @@ $newitem_count = count($items);
 			}
 		
 		
+		// echo "<pre>";print_r ($variat);
+		foreach ($variat as $vr){
+									$variation[]= array(
+												'regular_price' => $vr['att_reg_pr'],
+												'sku'  => $vr['att_sku'],
+												'attributes' => [
+												
+																	[
+																		'slug'=>'color',
+																		'name'=>'Color',
+																		'option'=>$vr['att_color']
+																	]
+																	,
+																	[
+																		'slug'=>'size',
+																		'name'=>'Size',
+																		'option'=>$vr['att_size']
+																	]
+																]
+												
+														)	;
+		}
+		
+		
+		
 		
 	//print_r ($attributes);exit;
 	
@@ -651,7 +678,7 @@ $newitem_count = count($items);
                 'variation' => true,
                 'options' => [
                     'Black',
-                    'Green'
+                    'yellow'
                 ]
             );
     $attributes[] =  array(
@@ -664,22 +691,7 @@ $newitem_count = count($items);
                     'M'
                 ]
             );
-
-
-        $data = array(
-            'name' => $_REQUEST['title'],
-            'description' => $_REQUEST['description_idi_'.$cid],
-            'sku' => $_REQUEST['external_id'],
-            'regular_price' => floatval(preg_replace("/[^-0-9\.]/","",$_REQUEST['bas_reg_price'] )),
-            'sale_price' =>  floatval(preg_replace("/[^-0-9\.]/","",$_REQUEST['bas_price'])),
-            'type' =>$_REQUEST['bas_product_type'],
-            'status' => $_REQUEST['publish_select'],
-            'external_url' => $_REQUEST['external_url'], // affiliate url
-            'categories' => $cats,
-            'images' => $main_images,
-
-            'attributes' => $attributes,
-            'variations' => [
+		$variation_example = [
                 [
                     'regular_price' => '29.98',
                     'sku'  => '24523523',
@@ -723,7 +735,21 @@ $newitem_count = count($items);
                         ]
                     ]
                 ]
-            ]
+            ];
+
+        $data = array(
+            'name' => $_REQUEST['title'],
+            'description' => $_REQUEST['description_idi_'.$cid],
+            'sku' => $_REQUEST['external_id'],
+            'regular_price' => floatval(preg_replace("/[^-0-9\.]/","",$_REQUEST['bas_reg_price'] )),
+            'sale_price' =>  floatval(preg_replace("/[^-0-9\.]/","",$_REQUEST['bas_price'])),
+            'type' =>$_REQUEST['bas_product_type'],
+            'status' => $_REQUEST['publish_select'],
+            'external_url' => $_REQUEST['external_url'], // affiliate url
+            'categories' => $cats,
+            'images' => $main_images,
+            'attributes' => $attributes,
+            'variations' => $variation
         );
 
 
