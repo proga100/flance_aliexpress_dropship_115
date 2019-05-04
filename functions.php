@@ -222,16 +222,16 @@ function store_import($data)
 		$product =$data	;
 
 	
-$proft_array = (array) $product;
-	
+            $proft_array = (array) $product;
 
-$wpdb->replace(
-           $wpdb->prefix . "flance_ae",
-      $proft_array
-        );
-if($wpdb->last_error !== '') {
-    $wpdb->print_error();
-}		
+
+            $wpdb->replace(
+                       $wpdb->prefix . "flance_ae",
+                  $proft_array
+                    );
+            if($wpdb->last_error !== '') {
+                $wpdb->print_error();
+            }
 	
 		
 	}
@@ -524,32 +524,26 @@ $newitem_count = count($items);
 	}
 	
 	function page_edit(){
-		  if ( isset($_REQUEST) ) {
+                              if ( isset($_REQUEST) ) {
 
-        $external_id = $_REQUEST['external_id'];
-		 
-	$item = desc_import( $external_id);
-	$prod_add=json_decode($item->prod_add_info);
-			
-			
-			$prod_add_info = (array)$prod_add;
-			
-			
-				$prod_attributes=(array)json_decode($item->attributes); // attributes retrieve from database
-	
+                            $external_id = $_REQUEST['external_id'];
 
-	
-	include 'admin/partials/html-admin-import-product-edit-ajax.php';
-	
-	
-	}
-	
+                        $item = desc_import( $external_id);
+                        $prod_add=json_decode($item->prod_add_info);
 
-	
-	
 
-		
-		
+                                $prod_add_info = (array)$prod_add;
+
+
+                                    $prod_attributes=(array)json_decode($item->attributes); // attributes retrieve from database
+
+
+
+                        include 'admin/partials/html-admin-import-product-edit-ajax.php';
+
+
+                        }
+
 	}
 	
 	
@@ -664,32 +658,31 @@ $newitem_count = count($items);
 																]
 												
 														)	;
-		}
-		
-		
+
+		                            $attributes_options['att_color'][]=$vr['att_color'];
+                                      $attributes_options['att_size'][]=$vr['att_size'];
+
+
+						}
+
+        $attributes[] = array(
+            'name' => 'Color',
+            'position' => 0,
+            'visible' => true,
+            'variation' => true,
+            'options' =>  $attributes_options['att_color']
+        );
 		
 		
 	//print_r ($attributes);exit;
 	
-	$attributes[] = array(
-                'name' => 'Color',
-                'position' => 0,
-                'visible' => true,
-                'variation' => true,
-                'options' => [
-                    'Dark blue',
-                    'yellow'
-                ]
-            );
+
     $attributes[] =  array(
                 'name' => 'Size',
                 'position' => 0,
                 'visible' => true,
                 'variation' => true,
-                'options' => [
-                    'S',
-                    'M'
-                ]
+                'options' =>  $attributes_options['att_size']
             );
 		$variation_example = [
                 [
@@ -898,27 +891,30 @@ foreach ($cids as $cid) {
     $attributes['product_calc'] = $aliexpress_parse['product_calc'];
 
 //exit;
-$data = $imp; 
+            $data = $imp;
 
-	$data->description =  $aliexpress_parse['fulldescription'];
-  $data->attributes=  json_encode($attributes);
-$data->user_description =  $aliexpress_parse['fulldescription'];
-$data->import_list = 'yes';
+                $data->description =  $aliexpress_parse['fulldescription'];
 
-		store_import($data);
-		 
-	// print_r($data);exit;
-}
-   
-     $message =$cids;
+
+              $data->attributes =  json_encode($attributes);
+            $data->user_description =  $aliexpress_parse['fulldescription'];
+            $data->import_list = 'yes';
+
+                    store_import($data);
+
+                // print_r($data);exit;
+            }
+
+                 $message =$cids;
 	
 //$_SESSION['import_ids'][] = $cids;	
 		
 		
 	 do_action( 'get_results_import_list'); // get result from database
 
+
 	$items = get_results_import_list();
-	
+
 $newitem_count = count($items);
     }
 	
@@ -990,10 +986,11 @@ function notification_bubble_in_admin_menu() {
 	 do_action( 'get_results_import_list'); // get result from database
 
 	$items = get_results_import_list();
+
 	
-$newitem = count($items);
+            $newitem = count($items);
 	
-	$submenu['flance-add-aliexpress-dropship']['2']['0'] .= $newitem ? "<span class='update-plugins count-1'><span class='update-count import_number'>$newitem </span></span>" : '';
+	        $submenu['flance-add-aliexpress-dropship']['2']['0'] .= $newitem ? "<span class='update-plugins count-1'><span class='update-count import_number'>$newitem </span></span>" : '';
 	
   
 }

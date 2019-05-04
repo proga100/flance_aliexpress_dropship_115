@@ -73,53 +73,53 @@ $simple_attributes = $this->simple_attributes($html); /// get simples attributes
 
 		
 		switch ($attrib['data-sku-prop-id']) {
-    case "14": // color
-   	
-	$color_array = 	$this->color_html($html_child);
-	$product_attributes[$attrib['data-sku-prop-id']]=$color_array;
-	
-        break;
-		
-		
-    case "136": // color
-   	
-	$color_array = 	$this->color_html($html_child);
-	$product_attributes[$attrib['data-sku-prop-id']]=$color_array;
-	
-        break;
-	  case "200000124": // shoes sizes
-     		
-	$sizes_array = $this->color_html($html_child );
-	$product_attributes[$attrib['data-sku-prop-id']]=$sizes_array;
-        break;	
-		  case "200000898": // shoes sizes  euopa sizes
-    $sizes_array = $this->color_html($html_child );
-	$product_attributes[$attrib['data-sku-prop-id']]=$sizes_array;
-        break;
-    case "5": // garments sizes 
-    $sizes_array = $this->color_html($html_child );
-	$product_attributes[$attrib['data-sku-prop-id']]=$sizes_array;
-        break;
-		
-		
-    case "200000369": // ring sizes
-  $sizes_array = $this->color_html($html_child );
-  $product_attributes[$attrib['data-sku-prop-id']]=$sizes_array;
-        break;
-	case "200000783": //// main stone size
-	$sizes_array = $this->color_html($html_child );
-	$product_attributes[$attrib['data-sku-prop-id']]=$sizes_array;
-		break;
-		
-	}
+                    case "14": // color
+
+                    $color_array = 	$this->color_html($html_child);
+
+                    $product_attributes[$attrib['data-sku-prop-id']]=$color_array;
+
+                        break;
+
+
+                    case "136": // color
+
+                    $color_array = 	$this->color_html($html_child);
+                    $product_attributes[$attrib['data-sku-prop-id']]=$color_array;
+
+                        break;
+                      case "200000124": // shoes sizes
+
+                    $sizes_array = $this->color_html($html_child );
+                    $product_attributes[$attrib['data-sku-prop-id']]=$sizes_array;
+                        break;
+                          case "200000898": // shoes sizes  euopa sizes
+                    $sizes_array = $this->color_html($html_child );
+                    $product_attributes[$attrib['data-sku-prop-id']]=$sizes_array;
+                        break;
+                    case "5": // garments sizes
+                        $sizes_array = $this->color_html($html_child );
+                        $product_attributes[$attrib['data-sku-prop-id']]=$sizes_array;
+                        break;
+
+
+                    case "200000369": // ring sizes
+                  $sizes_array = $this->color_html($html_child );
+                  $product_attributes[$attrib['data-sku-prop-id']]=$sizes_array;
+                        break;
+                    case "200000783": //// main stone size
+                    $sizes_array = $this->color_html($html_child );
+                    $product_attributes[$attrib['data-sku-prop-id']]=$sizes_array;
+                        break;
+
+	    }
 		
 	} // end foreach 
 	
-	$full_product_attibutes['fulldescription'] = $desc ;
-	$full_product_attibutes['simple_attributes']=$simple_attributes;
-		$full_product_attibutes['product_attributes']=$product_attributes;
-		
-			$full_product_attibutes['product_calc']=$product_calc ;
+                    $full_product_attibutes['fulldescription'] = $desc ;
+                    $full_product_attibutes['simple_attributes']=$simple_attributes;
+	            	$full_product_attibutes['product_attributes']=$product_attributes;
+        			$full_product_attibutes['product_calc']=$product_calc ;
 		//print_r ($full_product_attibutes);
 return $full_product_attibutes;
 

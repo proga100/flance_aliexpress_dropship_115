@@ -29,7 +29,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 $attrib_labels = array( 
-							'200000124' => 'size', // shoes sizes
+                            '200000124' => 'size', // shoes sizes
 						  '200000898'=> 'size' , // shoes euorpa sizes
 						   '14' => 'color',
 						   '136' => 'color', 
@@ -238,11 +238,18 @@ foreach ($prod_attributes['product_calc'] as $att) {
 	//	print_r ($prod_attr);exit;
 		$chil_att = explode('#', $pr_att); // get attribute value name
 		$chil_att_name = explode(':', $chil_att[0]); // get attribute code
-		
+
+
+
+
 	if ($attrib_labels[$chil_att_name[0]]  == 'color'){
+
+        $prod_attributes['product_attributes']=(array)  $prod_attributes['product_attributes'];
+
+    echo "<pre>";    print_r ($prod_attributes['product_attributes']);
 	
 	$imageme = $prod_attributes['product_attributes']->$chil_att_name[0]->$chil_att_name[1]->image; //image
-	
+
 
 	echo '
 	<div class="fl_2 fl_color"><img class="img_att" src="'.$imageme.'"/>
@@ -250,7 +257,9 @@ foreach ($prod_attributes['product_calc'] as $att) {
 	$varitions_images[] = $imageme; // for images tab
 	
 	}elseif($attrib_labels[$chil_att_name[0]]  == 'size'){
-	$sizeme = $prod_attributes['product_attributes']->$chil_att_name[0]->$chil_att_name[1]->size; //size value
+
+        echo "attr";    print_r ($prod_attributes['product_attributes']->$chil_att_name[0] ); exit;
+        $sizeme = $prod_attributes['product_attributes']->$chil_att_name[0]->$chil_att_name[1]->size; //size value
 	echo '
 	<div class="fl_2 fl_size"><input class="att_size" type ="text" name="att_'.$attrib_labels[$chil_att_name[0]].'['.$i.']" value="'.$sizeme.'"/></div>';
 		
