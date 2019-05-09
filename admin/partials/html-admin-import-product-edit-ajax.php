@@ -28,7 +28,10 @@ The component uses  the Aliexpress official providers APIs.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-$attrib_labels = array( 
+
+	$color_arr = array(14,136);
+	$size_arr  = array(200000124,200000898,5,200000369,200000783);
+	$attrib_labels = array( 
                             '200000124' => 'size', // shoes sizes
 						  '200000898'=> 'size' , // shoes euorpa sizes
 						   '14' => 'color',
@@ -245,21 +248,53 @@ foreach ($prod_attributes['product_calc'] as $att) {
 	if ($attrib_labels[$chil_att_name[0]]  == 'color'){
 
         $prod_attributes['product_attributes']=(array)  $prod_attributes['product_attributes'];
+		
+		$attribut_arr= (array)$prod_attributes['product_attributes'];
+		foreach ($attribut_arr as $key=>$att_single){
+				if(in_array($key, $color_arr )){  // for colors 
+							
+				$prod_attributes['product_attributes']['color'] = $att_single;
+				}
+		}
+		
+		$array = json_decode(json_encode($prod_attributes['product_attributes']['color']), true);
+			foreach($array as $key=>$art){
+				//echo $key;
+				if($key==$chil_att_name[1]){
+					
+				
+						   $imageme  = $art['image']; //size value
+						
+				}
+				
+			}
 
-    echo "<pre>";    print_r ($prod_attributes['product_attributes']);
 	
-	$imageme = $prod_attributes['product_attributes']->$chil_att_name[0]->$chil_att_name[1]->image; //image
-
-
-	echo '
-	<div class="fl_2 fl_color"><img class="img_att" src="'.$imageme.'"/>
-	<input class="att_color" type ="text" name="att_'.$attrib_labels[$chil_att_name[0]].'['.$i.']" value="'.$chil_att[1].'"/></div>';
-	$varitions_images[] = $imageme; // for images tab
+		echo '
+		<div class="fl_2 fl_color"><img class="img_att" src="'.$imageme.'"/>
+		<input class="att_color" type ="text" name="att_'.$attrib_labels[$chil_att_name[0]].'['.$i.']" value="'.$chil_att[1].'"/></div>';
+		$varitions_images[] = $imageme; // for images tab
 	
 	}elseif($attrib_labels[$chil_att_name[0]]  == 'size'){
-
-        echo "attr";    print_r ($prod_attributes['product_attributes']->$chil_att_name[0] ); exit;
-        $sizeme = $prod_attributes['product_attributes']->$chil_att_name[0]->$chil_att_name[1]->size; //size value
+		$attribut_arr= (array)$prod_attributes['product_attributes'];
+		foreach ($attribut_arr as $key=>$att_single){
+		
+				if(in_array($key, $size_arr)){  // for sizes 
+					$prod_attributes['product_attributes']['size'] = $att_single;
+				}
+		}
+			$array = json_decode(json_encode($prod_attributes['product_attributes']['size']), true);
+			foreach($array as $key=>$art){
+				//echo $key;
+				if($key==$chil_att_name[1]){
+					
+				
+						   $sizeme = $art['size']; //size value
+				}
+				
+			}
+	
+     
 	echo '
 	<div class="fl_2 fl_size"><input class="att_size" type ="text" name="att_'.$attrib_labels[$chil_att_name[0]].'['.$i.']" value="'.$sizeme.'"/></div>';
 		

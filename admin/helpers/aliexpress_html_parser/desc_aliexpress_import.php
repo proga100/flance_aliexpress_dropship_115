@@ -40,7 +40,7 @@ $follow  = true;
 $curl = curl_init();
 
 
-curl_setopt($curl, CURLOPT_HTTPHEADER, $opts['http']['header']);
+// curl_setopt($curl, CURLOPT_HTTPHEADER, $opts['http']['header']);  temporary off
 curl_setopt($curl, CURLOPT_URL, $product_url);
 
 curl_setopt($curl, CURLOPT_FOLLOWLOCATION, $follow);
