@@ -113,9 +113,9 @@ open: function(event, ui) {
     type: \'post\',
     success: function(data){
 		
+		jQuery(\'#dialog_'.$das['external_id'].'\').dialog(\'close\');
 		
-		
-	//	AddRemFunction('.$das['external_id'].');
+		AddRemFunction('.$das['external_id'].');
     }   
    });	
 			
