@@ -29,12 +29,17 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+       global $session ;
+
 
 
 		
 		$product_id =  $_REQUEST['product_id'];
 		$keyword =  $_REQUEST[ 'keyword'];
         $affiliate_cat_id =$_REQUEST['affiliate_cat_id'];
+        if (empty($keyword)) $keyword = $_SESSION['keyword'];
+        if (empty($affiliate_cat_id)) $affiliate_cat_id  = $_SESSION['affiliate_cat_id'];
+
 
 /*
 $vir_cat = $session->get( 'vir_cat', '');
@@ -151,8 +156,12 @@ $max_score = $session->get( 'max_score', '');
                     <div class="btn-group pull-left">
 
                     </div>
+
+
                     <input name="page" id="page"  value="flance-amp-admin-search-page"  type="hidden">
                     <input name="task" id="task"  value="search"  type="hidden">
+                     <input name="limitstart" id="limitstart_submit"  value=""  type="hidden">
+                     <input name="limit" id="limit_submit"  value=""  type="hidden">
 	    </form>
 </div>
      

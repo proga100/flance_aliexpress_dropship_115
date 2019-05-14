@@ -61,6 +61,9 @@ echo '<div class="bas_price" ><label>Price</label><br/>
 echo '<div class="bas_price" ><label>Regular Price</label><br/>
 <input class="bas_inp_price" name="bas_reg_price" type="text" value="'.$item->regular_price.'" /></div>';
 
+echo '<div class="bas_price" ><label>Local Price</label><br/>
+<input class="bas_inp_price" name="bas_local_price" type="text" value="'.$item->localprice.'" /></div>';
+
 echo '<div class="bas_publish" ><label>Publish</label>
 <br/>
 <select class="bas_select" name="publish_select">

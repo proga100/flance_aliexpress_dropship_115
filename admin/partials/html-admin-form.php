@@ -109,8 +109,49 @@
 
 
              </td>
-</tr>
+        </tr>
 
+         <!--
+
+         <tr valign="top">
+             <th scope="row">Currency</th>
+             <td>
+                 <select name="currency" id="currency">
+                     <?php
+                     $currencies = array(
+                         'USD',
+                         'RUB',
+                         'GBP',
+                         'BRL',
+                         'CAD',
+                         'AUD',
+                         'EUR',
+                         'INR',
+                         'UAH',
+                         'JPY',
+                         'MXN',
+                         'IDR',
+                         'TRY',
+                         'SEK'
+                     );
+                     foreach($currencies as $currency){
+                         $key = $currency;
+                         ?>
+                         <option value="<?php echo $key ?>"  <?php if (get_option('currency')==$key) echo "selected"; ?> ><?php echo $currency ?></option>
+
+
+                     <?php } ?>
+
+                 </select>
+
+
+                 <span class="description"> <code>Currency of Aliexpress product</code> .</span>
+
+
+
+             </td>
+         </tr>
+        !-->
 
 
      </table>

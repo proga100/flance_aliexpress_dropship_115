@@ -38,9 +38,9 @@ $attrib_labels = array(
 						   '200000369' => 'size', // ring sizes
 						   '200000783' => 'size' // main stone size
 						   );
-						   
 
-if (empty($this->items)){
+$items = $this->items;
+if (empty($items['results'])){
 	
 	echo '<div>No results</div>';
 }else{
@@ -56,21 +56,83 @@ $text_jas ='';
 		require('html-admin-import_new_javascript.php');
 	
 
-echo '<div class="loading">Loading&#8230;</div>';
+    echo '<div class="loading">Loading&#8230;</div>';
+
+    if (isset($_GET['limitstart'])) {
+        $pageno = $_GET['limitstart'];
+    } else {
+        $pageno = 1;
+    }
 ?>
 
 
 
-			<!-- aliexpress style !-->	
-			
-			
+			<!-- aliexpress style !-->
+
+    <?php
+
+
+    $total_results = $items['total_pages']; ?>
+
 <div id="main-wrap" class="main-wrap gallery-mode">
-								
+
+    <div class="pageNo">
+        <div class="total_res"><label>Total Results: <?php  echo $total_results;?> </label></div>
+        <div class="products_per_page">
+            <label>Products per Page</label>
+            <select name="pagelimit" id="pagelimit">
+
+                <?php
+                $options = array(4, 8, 12, 16);
+                if(isset($_COOKIE['pagelimit'])) {
+
+                    $limit = $_COOKIE['pagelimit'];
+
+                }
+                if ($_REQUEST['pagelimit']) $limit= $_REQUEST['pagelimit'];
+                foreach ($options as $opt){
+
+                    if ($limit == $opt ){
+
+                        $selected = 'selected';
+                    }else{
+                        $selected = Null;
+
+                    }
+
+
+                    echo '<option value="'.$opt.'"  '. $selected.'>'.$opt.'</option>';
+                }
+                ?>
+
+
+
+            </select>
+        </div>
+
+        <?php
+        $url = admin_url();
+        if ($_REQUEST['pageno']) $pageno = $_REQUEST['pageno'];
+       
+
+        $pagination =  paginate_links(array(
+            'base' =>  '%_%',
+            'format' => $url.'admin.php?limitstart=%#%',
+            'current' =>   $pageno,
+            'total' => ceil($total_results/$limit),
+            'prev_text'    => __('« prev'),
+            'next_text'    => __('next »'),
+        ));
+
+        ?>
+
+        <div class="pagination_pages"><?php echo $pagination ?></div>
+    </div>
 
 
 
 
-<div id="gallery-item">
+    <div id="gallery-item">
 <div id="list-items" class="clearfix temp-height lazy-load" data-spm="3" data-spm-max-idx="445">
 
 <ul class="util-clearfix son-list">
@@ -85,7 +147,7 @@ echo '<div class="loading">Loading&#8230;</div>';
 			
 
 
- foreach ($this->items as $i => $item): ?>
+ foreach ($items['results'] as $i => $item): ?>
 	<?php
 		
 		

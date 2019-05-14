@@ -354,7 +354,7 @@ border: 1px solid #ccc;
 .loading {
 	display:none;
   position: fixed;
-  z-index: 999;
+  z-index: 100000000;
   height: 2em;
   width: 2em;
   overflow: show;
@@ -571,6 +571,7 @@ border-top: 1px solid #ccc;
     float: left;
     margin: 10px;
 	    text-align: left;
+    width: 15%;
 }
 .bas_tags {
     float: left;
@@ -589,15 +590,18 @@ border-top: 1px solid #ccc;
 .bas_type{
    float: left;
     margin: 10px;
-	    text-align: left;	
-	
-	
+	    text-align: left;
+    width: 20%;
 }
 
 .bas_category {
     text-align: left;
 	margin:10px;
 
+}
+
+input.bas_inp_price {
+    width: 80%;
 }
 
 .bas_cat {
@@ -713,4 +717,94 @@ padding: 0 5px 1px !important;
 
 select#bas_tag {
     min-width: 100px;
+}
+
+.modme {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 )
+    url('http://i.stack.imgur.com/FhHRx.gif')
+    50% 50%
+    no-repeat;
+}
+
+
+.modme {
+    overflow: hidden;
+}
+
+
+.modme {
+    display: block;
+}
+.pageNo {
+    float: right;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.products_per_page, .total_res {
+    float: left;
+}
+
+.total_res {
+    margin-top: 5px;
+    margin-right: 10px;
+
+}
+
+.pagination_pages {
+    float: left;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.paging-navigation {
+    font-family: sans-serif;
+    padding: 1em;
+    background: #fff;
+    background: hsl(0, 0%, 100%);
+}
+
+/* Remove bullets and list indentation */
+.paging-navigation ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Make the list items appear horizontally */
+.paging-navigation li {
+    display: inline;
+}
+
+/* Give each link and the current item some padding to make them easy to click */
+a.page-numbers,
+span.page-numbers {
+    padding: .3em .7em;
+        color: white;
+    background-color: #7d8898;
+}
+
+/* Link hover state */
+a:hover.page-numbers {
+    color: #000;
+    color: hsl(0, 0%, 0%);
+}
+
+/* Current page bold and dark */
+.paging-navigation .current {
+    font-weight: bold;
+    color: #000;
+    color: hsl(0, 0%, 0%);
+}
+
+span.page-numbers.current {
+    background: #50f1db;
+    color: black;
 }

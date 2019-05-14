@@ -28,7 +28,9 @@ The component uses  the Aliexpress official providers APIs.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-foreach ($this->items as $i => $item) {
+
+$items = $this->items;
+foreach ($items['results'] as $i => $item) {
 if ($i != 99999999999999999){
 $das =(array)$item;
 
@@ -104,19 +106,37 @@ open: function(event, ui) {
 			//	 jQuery(\'#dialog_'.$das['external_id'].'\').dialog(\'close\');
 				 
 				 
-			//	  jQuery("#butimport_'.$das['external_id'].'").attr("class", "it_right load");
+
 				  
 				  
 			jQuery.ajax({
     url: \'admin-ajax.php?action=page_import_shop&external_id='.$das['external_id'].'\',
 	data:form_data,
     type: \'post\',
+    beforeSend: function() {
+         jQuery("#butimport_'.$das['external_id'].'").attr("class", "it_right load");
+       // jQuery(\'.ui-dialog-content\').addClass(\'modme\');
+      // jQuery(\'.ui-dialog\').css(\'display\',\'none\');
+        jQuery(\'.loading\').show();
+
+
+     },
+
+    error: function(){
+            alert(\'No response\');
+            return true;
+        },
     success: function(data){
+       //  jQuery(\'.ui-dialog\').css(\'opacity\',\'\');
 		
-		jQuery(\'#dialog_'.$das['external_id'].'\').dialog(\'close\');
+        jQuery(\'#dialog_'.$das['external_id'].'\').dialog(\'close\');
+      jQuery("#butimport_'.$das['external_id'].'").attr("class", "it_right");
 		
-		AddRemFunction('.$das['external_id'].');
-    }   
+		//AddRemFunction('.$das['external_id'].');
+    },
+       complete: function(){
+    jQuery(\'.loading\').hide();
+  }
    });	
 			
 			
@@ -816,6 +836,10 @@ if (select_value ==\'set_all\'){
 		
 		
 	}
+
+	$body = jQuery("body");
+
+
 
 ';
 

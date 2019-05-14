@@ -98,6 +98,28 @@ function getCookie(cname) {
         }
     }
     return "";
-} 
+}
 
-	
+jQuery(document).ready(function () {
+
+    var pagelimit=   jQuery( "#limit" ).val();
+    jQuery( "#limit_submit" ).val(pagelimit);
+
+
+    jQuery( "#limit" ).on('change', function()
+    {
+        var pagelimit=   jQuery( "#limit" ).val();
+        jQuery( "#limit_submit" ).val(pagelimit);
+        jQuery( "#search_id" ).submit();
+    });
+
+    jQuery( "#pagelimit" ).on('change', function()
+    {
+        var pagelimit=   jQuery( "#pagelimit" ).val();
+        var url      = jQuery(location).attr('href');
+        jQuery(location).attr('href',url+'&pagelimit='+pagelimit);
+
+    });
+
+
+});

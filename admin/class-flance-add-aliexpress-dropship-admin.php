@@ -165,7 +165,7 @@ add_submenu_page(
 		register_setting( 'flance-amp-settings-group', 'aliexpress_key' );
 		register_setting( 'flance-amp-settings-group', 'tracking_id' );
 		register_setting( 'flance-amp-settings-group', 'language' );
-		
+        register_setting( 'flance-amp-settings-group', 'currency' );
 		
 	}
 
@@ -181,8 +181,10 @@ add_submenu_page(
 public function flance_import_aliexpress_product_search() {
     $res =	$this->flance_import_aliexpress_product_search_input_values();
     include 'partials/html-admin-search.php';
-    if ($_GET['task'] == 'search') {
+    if ($_GET['task'] == 'search' || $_GET['task'] == '') {
         $results =$this->flance_import_aliexpress_product_search_results($res);
+
+      //  echo "<pre>";        print_r ($results);exit;
 
         $product_id= $res['product_id'];
         if($product_id =='') {
@@ -203,6 +205,10 @@ public function flance_import_aliexpress_product_search() {
 	do_action( 'get_results_ae',$ids); // get result from database
 	
 	$data = get_results_ae($ids);
+
+
+        $total_results = $results->result->totalResults;
+
     include 'partials/html-admin-seach-results.php';
 }
 
@@ -226,7 +232,8 @@ public function flance_import_aliexpress_product_search_input_values() {
     $var['woo_cat'] = $_GET['woo_cat'];
     $var['affiliate_cat_id'] = $_GET['affiliate_cat_id'];
     $var['product_id'] = $_REQUEST['product_id'];
-
+    $var['limit'] = $_REQUEST['limit'];
+    $var['limitstart'] = $_REQUEST['limitstart'];
 
 return $var  ;
 		
@@ -234,6 +241,12 @@ return $var  ;
 			
 	
 public function flance_import_aliexpress_product_search_results($res) {
+
+    if ( ! session_id() ) {
+        session_start();
+    }
+
+    global $session;
     // print_r($res);
     if (!empty($res['directionTable'])) {
         $sort= $res['directionTable'];
@@ -245,14 +258,32 @@ public function flance_import_aliexpress_product_search_results($res) {
 
         $sort=NUll;
     }
-    $keyword= $res['keyword'];
-    $product_id= $res['product_id'];
+
+
+
+
+
+
+    $keyword = $res['keyword'];
+
+    if (empty($keyword)) {
+        $keyword = $_SESSION['keyword'];
+    }
+
+    $product_id = $res['product_id'];
+    foreach ( $res as $key=>$rt){
+        $_SESSION[$key]=$rt;
+
+    }
+
 
     if (!empty($res['limitstart'])) {
-        $pageNo= $res['limitstart']+1;
+        $pageNo= $res['limitstart'];
+        setcookie( 'limitstart',  $pageNo , 3 * 10000, COOKIEPATH, COOKIE_DOMAIN );
     }else {
 
-        $pageNo=NUll;
+        $pageNo=1;
+        setcookie( 'limitstart',  $pageNo , 3 * 10000, COOKIEPATH, COOKIE_DOMAIN );
     }
     $currency= $res['vir_currency'];
 
@@ -263,12 +294,18 @@ public function flance_import_aliexpress_product_search_results($res) {
 
     if (!empty($res['limit'])) {
         $pageSize= $res['limit'];
+        setcookie( 'limit',  $pageSize , 3 * DAYS_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN );
+
+
     }else {
 
         $res['limit']=$pageSize=5;
     }
 
+
+
     $category_id = $res['affiliate_cat_id'];
+    if (empty( $category_id))  $category_id  = $_SESSION['affiliate_cat_id'];
 
     $comparams['ali_api'] = get_option('aliexpress_key');
     $comparams['tracking_id'] = get_option('tracking_id');
@@ -276,23 +313,19 @@ public function flance_import_aliexpress_product_search_results($res) {
     include_once ("helpers/aliexpress/tests/Aliex.php");
 
 
-
     if($product_id =='') $aliexpress_json = $Ali->testAliexIO($keyword,$pageNo,$pageSize,$sort,$originalPriceFrom,$originalPriceTo,$startCreditScore,$endCreditScore,$currency,$category_id );
     if($product_id !='') $aliexpress_json = $Ali->testGetProductDetail($product_id,$currency );
 
-
-
-
-
+   //     echo "<pre>";
     $data = json_decode($aliexpress_json);
 
 
-    //print_r ($data);
+  //  print_r ($data);
 
 
 
 
-return $data   ;
+        return $data   ;
 		
 			}
 		// Admin Import list  Page Function
@@ -308,7 +341,9 @@ return $data   ;
 	
 		 do_action( 'get_results_import_list'); // get result from database
 
-	$this->items = get_results_import_list();
+        $this->items = get_results_import_list();
+
+
 	 // The $_REQUEST contains all the data sent via ajax 
   
 	
@@ -322,7 +357,7 @@ return $data   ;
 public  static function flance_aliexpress_categories(){
 
     $affiliate_cat_id =$_REQUEST['affiliate_cat_id'];
-	
+    if (empty($affiliate_cat_id)) $affiliate_cat_id  = $_SESSION['affiliate_cat_id'];
 	$file = __DIR__."/ali_categories.json";
     if (file_exists(__DIR__."/ali_categories.json")) {
         $string= file_get_contents($file);

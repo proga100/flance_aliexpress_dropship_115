@@ -60,7 +60,34 @@ class Pharse
      */
     static public function file_get_dom($file, $return_root = true, $use_include_path = false, $context = null)
     {
+        $context = stream_context_create(array(
+                "http" => array(
+                    "method" => "GET",
+                    "header" => "Accept-languange: ru_RU;\r\n" .
+                        "Cookie: intl_locale=ru_RU;\r\n"
+                )
+            )
+        );
+
+        $cookies = array("Cookie: testcookie=blah; testcookie2=haha; path=/; domain=infectionist.com;");
+        $opts = array('http' => array('header' => $cookies));
+        $context = stream_context_create($opts);
+
+
+    //    print_r ( $context);
+
         $f = file_get_contents($file, $use_include_path, $context);
+
+        $cookies = array();
+
+    //    print_r ($http_response_header);
+        foreach ($http_response_header as $hdr) {
+            if (preg_match('/^Set-Cookie:\s*([^;]+)/', $hdr, $matches)) {
+                parse_str($matches[1], $tmp);
+                $cookies += $tmp;
+            }
+        }
+      //  print_r($cookies);
 
         return (($f === false) ? false : self::str_get_dom($f, $return_root));
     }

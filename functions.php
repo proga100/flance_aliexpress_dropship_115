@@ -8,10 +8,14 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 function myStartSession() {
-  
+
+    if( ! session_id() ) {
         session_start();
+    }
  
 }
+
+myStartSession();
 
 function myEndSession() {
     session_destroy ();
@@ -455,29 +459,29 @@ function create_api(){
         $cids = $_REQUEST['cid'];
 		
 		
-foreach ($cids as $cid) {
+            foreach ($cids as $cid) {
 
-$imp->link_category_id =9;
-	$data = [
-    'name' => $imp->user_title,
-    'description' => $imp->user_description,
-	'sku' => $cid,
-	'regular_price' => floatval(preg_replace("/[^-0-9\.]/","",$imp->regular_price )),
-	'sale_price' =>  floatval(preg_replace("/[^-0-9\.]/","",$imp->price)),
-	 'categories' => [
-        [
-            'id' => $imp->link_category_id
-        ]
-    ],
-	 'images' => [
-        [
-            'src' => $imp->user_image,
-            'position' => 0
-        ]
-		]
-];
-		 create_item( $data);
-}
+                $imp->link_category_id =9;
+                $data = [
+                'name' => $imp->user_title,
+                'description' => $imp->user_description,
+                'sku' => $cid,
+                'regular_price' => floatval(preg_replace("/[^-0-9\.]/","",$imp->regular_price )),
+                'sale_price' =>  floatval(preg_replace("/[^-0-9\.]/","",$imp->price)),
+                 'categories' => [
+                    [
+                        'id' => $imp->link_category_id
+                    ]
+                ],
+                 'images' => [
+                    [
+                        'src' => $imp->user_image,
+                        'position' => 0
+                    ]
+                    ]
+            ];
+                     create_item( $data);
+            }
    
      
 
@@ -635,15 +639,29 @@ $newitem_count = count($items);
 				]);		
 			}
 			}
+        // calculate the rpice based on the rate
+        $regular_price =  floatval(preg_replace("/[^-0-9\.]/","",$_REQUEST['bas_reg_price'] ));
+
+        $sale_price =  floatval(preg_replace("/[^-0-9\.]/","",$_REQUEST['bas_price']));
+        $discount_rate =  $sale_price/ $regular_price;
+        $local_price = floatval(preg_replace("/[^-0-9\.]/","",$_REQUEST['bas_local_price']));
+        $rate =   $local_price/$sale_price;
+        $regular_price = $regular_price*$rate;
+
 
 
 		// echo "<pre>";print_r ($variat);
 		foreach ($variat as $vr){
+
+
+            $regular_price = $vr['att_reg_pr']* $rate;
+            $sale_price = $vr['att_reg_pr']* $rate* $discount_rate;
 									$variation[]= array(
-												'regular_price' => $vr['att_reg_pr'],
+												'regular_price' =>  $sale_price,
+                                                'sale_price' =>  $sale_price,
 												'sku'  => $vr['att_sku'],
 												'attributes' => [
-												
+
 																	[
 																		'slug'=>'color',
 																		'name'=>'Color',
@@ -656,7 +674,7 @@ $newitem_count = count($items);
 																		'option'=>$vr['att_size']
 																	]
 																]
-												
+
 														)	;
 
 		                            $attributes_options['att_color'][]=$vr['att_color'];
@@ -684,6 +702,7 @@ $newitem_count = count($items);
                 'variation' => true,
                 'options' =>  $attributes_options['att_size']
             );
+
 		$variation_example = [
                 [
                     'regular_price' => '29.98',
@@ -730,19 +749,24 @@ $newitem_count = count($items);
                 ]
             ];
 
+
+
+
         $data = array(
             'name' => $_REQUEST['title'],
             'description' => $_REQUEST['description_idi_'.$cid],
             'sku' => $_REQUEST['external_id'],
-            'regular_price' => floatval(preg_replace("/[^-0-9\.]/","",$_REQUEST['bas_reg_price'] )),
-            'sale_price' =>  floatval(preg_replace("/[^-0-9\.]/","",$_REQUEST['bas_price'])),
+            'regular_price' =>  $regular_price,
+            'sale_price' =>     $local_price ,
             'type' =>$_REQUEST['bas_product_type'],
             'status' => $_REQUEST['publish_select'],
             'external_url' => $_REQUEST['external_url'], // affiliate url
             'categories' => $cats,
             'images' => $main_images,
             'attributes' => $attributes,
-            'variations' => $variation
+            'variations' => $variation,
+            'local_price' =>   $local_price,
+            'rate'=>$rate
         );
 
 
@@ -956,16 +980,32 @@ function get_results_import_list()
 		
 		global $wpdb;
 				$wpdb->show_errors();
+        if (isset($_GET['limitstart'])) {
+            $pageno = $_GET['limitstart'];
+        } else {
+            $pageno = 1;
+        }
 
-		 $results = $wpdb->get_results( 
-                     $wpdb->prepare("SELECT * FROM {$wpdb->prefix}flance_ae WHERE import_list = 'yes'",'yes') 
+        $no_of_records_per_page = $_GET['pagelimit'];
+
+        if (empty($no_of_records_per_page)) $no_of_records_per_page =2;
+        $offset = ($pageno-1) * $no_of_records_per_page;
+
+        $counts = $wpdb->get_results(
+                     $wpdb->prepare("SELECT * FROM {$wpdb->prefix}flance_ae WHERE import_list = 'yes'",'yes')
                  );
 
-				
-				
+
+        $total_pages = COUNT($counts) ;
+
+			 $results = $wpdb->get_results(
+                 $wpdb->prepare("SELECT * FROM {$wpdb->prefix}flance_ae WHERE import_list = 'yes' LIMIT ".$offset.", ".$no_of_records_per_page,'yes')
+             );
+
+
 		$wpdb->show_errors();
 		
-	return $results;	
+	return $results= array('results'=>$results, 'total_pages'=>$total_pages);
 	}	
 	
 	// get results from database

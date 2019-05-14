@@ -61,6 +61,8 @@ class AliexIOTest   {
     {
         $language = get_option('language');
         $currency = get_woocommerce_currency();
+
+
         $conf = new GenericConfiguration();
         $this->aliconfig($conf);
         $aliexIO = new AliexIO($conf);
@@ -97,6 +99,9 @@ class AliexIOTest   {
     {
         $currency = get_woocommerce_currency();
         $language = get_option('language');
+
+       // $currency = get_option('currency');
+
 		 $conf = new GenericConfiguration();
         $this->aliconfig($conf);
       //  print_r ($conf);

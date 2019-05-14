@@ -57,7 +57,12 @@ $html = str_get_html($result);
 // get description content
 include_once('pharse-master/pharse.php');
 
-$desc_html = Pharse::file_get_dom('https://desc.aliexpress.com/getDescModuleAjax.htm?productId='.$cid);
+
+
+
+// print_r ( $context);exit;
+ $desc_html = Pharse::file_get_dom('https://desc.aliexpress.com/getDescModuleAjax.htm?productId='.$cid, $return_root = true, $use_include_path = false, $context );
+
 
 if (preg_match('#\swindow.productDescription\s*=\s*(.*?);\s*$#ms', $desc_html->getInnerText(), $matches)) {
 	$str = str_replace("window.productDescription='","",$matches[0]);

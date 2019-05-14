@@ -315,18 +315,80 @@ return false;
 }
 ';
 
-echo '<script type="text/javascript">';
-echo $javas;
+    echo '<script type="text/javascript">';
+    echo $javas;
 
-echo '</script>';
+    echo '</script>';
 
-//$document->addScriptDeclaration($javas);
+    //$document->addScriptDeclaration($javas);
 
-//$session = JFactory::getSession();
-// added import product ids
-//$pks = $session->get( 'product_ids');
-echo '<div class="loading">Loading&#8230;</div>';
+    //$session = JFactory::getSession();
+    // added import product ids
+    //$pks = $session->get( 'product_ids');
+    echo '<div class="loading">Loading&#8230;</div>';
+    if(isset($_COOKIE['limitstart'])) {
+        $pageno = $_COOKIE['limitstart'];
+
+    }else{
+        $pageno =1;
+    }
+
+
 ?>
+
+   <div class="pageNo">
+                   <div class="total_res"><label>Total Results: <?php  echo $total_results;?> </label></div>
+                     <div class="products_per_page">
+                   <label>Products per Page</label>
+                   <select name="limit" id="limit">
+
+                       <?php
+                            $options = array(4, 8, 12, 16);
+                               if(isset($_COOKIE['limit'])) {
+
+                                   $limit = $_COOKIE['limit'];
+
+                               }
+                               if ($_REQUEST['limit']) $limit= $_REQUEST['limit'];
+                            foreach ($options as $opt){
+
+                                    if ($limit == $opt ){
+
+                                        $selected = 'selected';
+                                    }else{
+                                        $selected = Null;
+
+                                    }
+
+
+                                echo '<option value="'.$opt.'"  '. $selected.'>'.$opt.'</option>';
+                            }
+                        ?>
+
+
+
+                   </select>
+                </div>
+
+                       <?php
+                            $url = admin_url();
+                            if ($_REQUEST['limitstart']) $pageno = $_REQUEST['limitstart'];
+
+
+                            $pagination =  paginate_links(array(
+                                'base' =>  '%_%',
+                                'format' => $url.'admin.php?limitstart=%#%',
+                                'current' =>  $pageno,
+                                'total' => ($total_results/$limit)-5,
+                                'prev_text'    => __('« prev'),
+                                'next_text'    => __('next »'),
+                            ));
+
+                      ?>
+
+                   <div class="pagination_pages"><?php echo $pagination ?></div>
+   </div>
+
 
 			<!-- aliexpress style !-->	
 <div id="main-wrap" class="main-wrap gallery-mode">
